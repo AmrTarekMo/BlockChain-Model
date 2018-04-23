@@ -6,23 +6,32 @@ public class Block{
     String hash , prevHash = "" , data ;
     long timeStamp;
 
-    Block(String prevHash , String data) throws NoSuchAlgorithmException {
+    Block(String prevHash , String data){
         this.data = data;
         this.timeStamp = new Date().getTime();
         this.prevHash = prevHash;
         this.hash = generateHash();
     }
-    public String generateHash()throws NoSuchAlgorithmException{
+    public String generateHash(){
         String input = data + prevHash + Long.toString(timeStamp);
         return SHA256(input);
     }
-    public String SHA256(String message)throws NoSuchAlgorithmException {
-        MessageDigest mDigest = MessageDigest.getInstance("SHA256");
-        byte[] result = mDigest.digest(message.getBytes());
-        StringBuffer sb = new StringBuffer();
-        for (int i = 0; i < result.length ; i++) {
-            sb.append(Integer.toString((result[i] & 0xff) + 0x100 ,16).substring(1));
+    public String SHA256(String message) {
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            //Applies sha256 to our input,
+            byte[] hash = digest.digest(message.getBytes("UTF-8"));
+
+            StringBuffer hexString = new StringBuffer(); // This will contain hash as hexidecimal
+            for (int i = 0; i < hash.length; i++) {
+                String hex = Integer.toHexString(0xff & hash[i]);
+                if(hex.length() == 1) hexString.append('0');
+                hexString.append(hex);
+            }
+            return hexString.toString();
         }
-        return sb.toString();
+        catch(Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }
