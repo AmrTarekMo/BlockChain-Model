@@ -1,10 +1,11 @@
 import java.util.ArrayList;
-//import com.google.gson.GsonBuilder;
+import com.google.gson.GsonBuilder;
 
 public class BlockChain {
     ArrayList<Block> blockchain;
 
-    public BlockChain(){
+    BlockChain(){
+        blockchain = new ArrayList<>();
         blockchain.add(genesisBlock());
     }
     public Block genesisBlock(){
@@ -17,9 +18,8 @@ public class BlockChain {
         blockchain.add(temp);
     }
     public void printBlockChain(){
-    /*    String blockchainJson = new GsonBuilder().setPrettyPrinting().create().toJson(blockchain);
-        System.out.println(blockchainJson);
-    */
+        //String blockchainJson = new GsonBuilder().setPrettyPrinting().create().toJson(blockchain);
+       // System.out.println(blockchainJson);
         for (int i = 0; i < blockchain.size() ; i++) {
             System.out.println(blockchain.get(i).hash + "  " + blockchain.get(i).data + "  " +blockchain.get(i).timeStamp + "  ");
         }
