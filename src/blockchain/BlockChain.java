@@ -20,7 +20,7 @@ public class BlockChain {
         System.out.println(blockchainJson);
     }
     public boolean isValid() {
-        String target = new String(new char[5]).replace('\0', '0');
+        String target = new  String(new char[5]).replace('\0', '0');
         for(int i=0 ; i<chain.size()-1 ; i++) {
             Block current = chain.get(i+1), previous = chain.get(i);
             if(!current.hash.equals(current.calculateHash()) ) {
