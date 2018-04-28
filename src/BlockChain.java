@@ -1,36 +1,54 @@
-import java.util.ArrayList;
-import com.google.gson.GsonBuilder;
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package blockchain;
 
-public class BlockChain {
-    ArrayList<Block> blockchain;
-    static int difficulty = 5;
-    BlockChain(){
-        blockchain = new ArrayList<>();
-        blockchain.add(genesisBlock());
-    }
-    public Block genesisBlock(){
-        Block genesis = new Block("0","Genesis Block");
-        return genesis;
-    }
-    public void AddBlock(String Data){
-        Block last = blockchain.get(blockchain.size()-1);
-        Block temp = new Block(last.hash,Data);
-        blockchain.add(temp);
-    }
-    public void printBlockChain(){
-        String blockchainJson = new GsonBuilder().setPrettyPrinting().create().toJson(blockchain);
-        System.out.println(blockchainJson);
-    }
-    public boolean isValid(){
-        Block cur , prev;
-        for(int i=1 ; i<blockchain.size() ; i++){
-            prev = blockchain.get(i-1);
-            cur = blockchain.get(i);
-            if(!cur.hash.equals(cur.generateHash()))
+import java.util.ArrayList;
+import com.google.gson.*;
+
+/**
+ *
+ * @author GOOD
+ */
+public class BlockChain 
+{
+   public static ArrayList<Block> chain = new ArrayList();
+   public static int difficulty = 6;
+   
+   public static boolean isValid()
+   {
+       String target = new String(new char[5]).replace('\0', '0'); //Create a string with difficulty * "0"
+       for(int i=0 ; i<chain.size()-1 ; i++)
+       {
+           Block current=chain.get(i+1), previous=chain.get(i);
+           if(!current.hash.equals(current.calculateHash()) )
+           {
+               	System.out.println("Current Hashes not equal"); 
                 return false;
-            if(!cur.prevHash.equals(prev.hash))
+           }
+
+           if(!current.prevHash.equals(previous.hash))
+           {
+               	System.out.println("Previous Hashes not equal");
                 return false;
-        }
-        return true;
-    }
+           }
+           
+           if(!current.hash.substring( 0, difficulty).equals(target))
+           {
+		System.out.println("This block hasn't been mined");
+		return false;
+           }
+       }
+       
+       return true;
+   }
+   public static void main(String[] args)
+   {
+       	String target = new String(new char[difficulty]).replace('\0', '0'); //Create a string with difficulty * "0"
+        chain.add(new Block("Hi im the first block", "0"));
+        System.out.println("Trying to Mine block 1... ");
+        chain.get(0).mineBlock(difficulty);
+   }
 }
