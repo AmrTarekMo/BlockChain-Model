@@ -8,18 +8,19 @@ package blockchain;
 import java.util.ArrayList;
 import com.google.gson.*;
 
-/**
- *
- * @author GOOD
- */
 public class BlockChain 
 {
-   public static ArrayList<Block> chain = new ArrayList();
+   public ArrayList<Block> chain;
    public static int difficulty = 6;
    
-   public static boolean isValid()
+   
+   public BlockChain()
    {
-       String target = new String(new char[5]).replace('\0', '0'); //Create a string with difficulty * "0"
+       chain=new ArrayList();
+   }
+   public boolean isValid()
+   {
+       String target = new String(new char[5]).replace('\0', '0'); 
        for(int i=0 ; i<chain.size()-1 ; i++)
        {
            Block current=chain.get(i+1), previous=chain.get(i);
@@ -43,5 +44,18 @@ public class BlockChain
        }
        
        return true;
+   }
+   
+   public void mineBlock(int difficulty, String data, String prevHash) 
+   {
+        Block block=new Block(data,prevHash);
+        String target = new String(new char[difficulty]).replace('\0', '0');
+	while(!block.hash.substring( 0, difficulty).equals(target))
+        { 
+		block.nonce ++;
+		block.hash = block.calculateHash();
+        }
+	System.out.println("Block Mined!!! : " + block.hash);
+        chain.add(block);
    }
 }

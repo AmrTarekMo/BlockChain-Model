@@ -5,10 +5,7 @@
  */
 package blockchain;
 
-/**
- *
- * @author GOOD
- */
+
 import java.security.MessageDigest;
 
 public class Utility {
@@ -18,9 +15,8 @@ public class Utility {
 		try 
                 {
 			MessageDigest digest = MessageDigest.getInstance("SHA-256");	        
-			//Applies sha256 to our input, 
 			byte[] hash = digest.digest(input.getBytes("UTF-8"));	        
-			StringBuffer hexString = new StringBuffer(); // This will contain hash as hexidecimal
+			StringBuffer hexString = new StringBuffer(); 
 			for (int i = 0; i < hash.length; i++)
                         {
 				String hex = Integer.toHexString(0xff & hash[i]);
@@ -33,8 +29,5 @@ public class Utility {
 			throw new RuntimeException(e);
 		}
 	}
-        public static void main()
-        {
-            
-        }
+
 }
