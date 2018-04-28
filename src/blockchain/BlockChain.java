@@ -45,4 +45,17 @@ public class BlockChain
        
        return true;
    }
+   
+   public void mineBlock(int difficulty, String data, String prevHash) 
+   {
+        Block block=new Block(data,prevHash);
+        String target = new String(new char[difficulty]).replace('\0', '0');
+	while(!block.hash.substring( 0, difficulty).equals(target))
+        { 
+		block.nonce ++;
+		block.hash = block.calculateHash();
+        }
+	System.out.println("Block Mined!!! : " + block.hash);
+        chain.add(block);
+   }
 }
