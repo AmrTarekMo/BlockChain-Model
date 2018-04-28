@@ -44,11 +44,4 @@ public class BlockChain
        
        return true;
    }
-   public static void main(String[] args)
-   {
-       	String target = new String(new char[difficulty]).replace('\0', '0'); //Create a string with difficulty * "0"
-        chain.add(new Block("Hi im the first block", "0"));
-        System.out.println("Trying to Mine block 1... ");
-        chain.get(0).mineBlock(difficulty);
-   }
 }
