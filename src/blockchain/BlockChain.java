@@ -58,4 +58,18 @@ public class BlockChain
 	System.out.println("Block Mined!!! : " + block.hash);
         chain.add(block);
    }
+   public void printChain()
+   {
+       for(int i=0 ;i<chain.size();i++)
+       {
+           System.out.println("Block's data: "+chain.get(i).data);
+           System.out.println("Block's hash: "+chain.get(i).hash);
+       }
+   }
+   
+   public static void main(String[] args)
+   {
+       
+   }
 }
+
