@@ -9,11 +9,6 @@ public class BlockChain {
 
     public BlockChain() {
         chain = new ArrayList<>();
-        genesisBlock();
-    }
-    public void genesisBlock(){
-        Block genesis = new Block("Genesis Block" , "0");
-        chain.add(genesis);
     }
     public void PrintChain(){
         String blockchainJson = new GsonBuilder().setPrettyPrinting().create().toJson(chain);
