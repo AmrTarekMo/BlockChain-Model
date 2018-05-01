@@ -14,7 +14,7 @@ public class Block extends Utility {
         this.hash = calculateHash();
     }
     public String calculateHash() {
-        return applySha256(data+prevHash+nonce+timeStamp);
+        return applySha256(data+prevHash+Long.toString(nonce)+Long.toString(timeStamp));
     }
             
 }
