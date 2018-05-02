@@ -1,15 +1,16 @@
 package blockchain;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+
 import com.google.gson.*;
 
 public class BlockChain {
-    public ArrayList<Block> chain;
+    public static ArrayList<Block> chain = new ArrayList<>();
+    public static HashMap<String,TransactionOutput> UTXOs = new HashMap<String,TransactionOutput>();
     public static int difficulty = 5;
+    public static double minimumTransaction = 0.1f;
 
-    public BlockChain() {
-        chain = new ArrayList<>();
-    }
     public void PrintChain(){
         String blockchainJson = new GsonBuilder().setPrettyPrinting().create().toJson(chain);
         System.out.println(blockchainJson);
@@ -32,17 +33,5 @@ public class BlockChain {
             }
         }
         return true;
-    }
-
-    public void mineBlock(String data, String prevHash) {
-        Block block = new Block(data,prevHash);
-        String target = new String(new char[difficulty]).replace('\0', '0');
-
-        while(!block.hash.substring( 0, difficulty).equals(target)) {
-            block.nonce ++;
-            block.hash = block.calculateHash();
-        }
-        System.out.println("Block Mined!!! : " + block.hash);
-        chain.add(block);
     }
 }
