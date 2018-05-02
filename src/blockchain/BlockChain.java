@@ -10,12 +10,14 @@ public class BlockChain {
     public static HashMap<String,TransactionOutput> UTXOs = new HashMap<String,TransactionOutput>();
     public static int difficulty = 5;
     public static double minimumTransaction = 0.1f;
+    public static Transaction genesisTransaction;
+
 
     public void PrintChain(){
         String blockchainJson = new GsonBuilder().setPrettyPrinting().create().toJson(chain);
         System.out.println(blockchainJson);
     }
-    public boolean isValid() {
+    public static boolean isValid() {
         String target = new String(new char[5]).replace('\0', '0');
         for(int i=0 ; i<chain.size()-1 ; i++) {
             Block current = chain.get(i+1), previous = chain.get(i);
@@ -33,5 +35,9 @@ public class BlockChain {
             }
         }
         return true;
+    }
+    public static void addBlock(Block newBlock) {
+        newBlock.mineBlock(difficulty);
+        chain.add(newBlock);
     }
 }
